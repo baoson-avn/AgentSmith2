@@ -1,0 +1,170 @@
+﻿<Mah:MetroWindow x:Class="AvnAgent.MainWindow"
+                 xmlns:Mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:Material="http://materialdesigninxaml.net/winfx/xaml/themes"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:converters="clr-namespace:AvnAgent.Converters"
+                 TitleCaps="False"
+                 SizeToContent="WidthAndHeight"
+                 BorderBrush="Gray"
+                 BorderThickness="1"
+                 Title="AVN Audit - Projects"
+                 MinHeight="600" MinWidth="1000">
+
+    <!--#region CONVERTERS -->
+    <Mah:MetroWindow.Resources>
+        <BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverter"/>
+        <converters:EmptyStringToVisibilityConverter x:Key="EmptyStringToVisibilityConverter"/>
+    </Mah:MetroWindow.Resources>
+    <!--#endregion-->
+
+
+    <Grid Grid.IsSharedSizeScope="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="170"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--#region THE LEFT COLUMN-->
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#191654" Offset="0"/>
+                    <GradientStop Color="#43C6AC" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition SharedSizeGroup="TopBar" Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="AVN" Margin="10, 10, 0, 10"
+                           FontWeight="Heavy"
+                           Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                           Foreground="White"/>
+                <TextBlock Text="Projects" Margin="0, 10, 10, 10"
+                           FontStyle="Normal"
+                           FontSize="20"
+                           VerticalAlignment="Bottom"
+                           Foreground="{DynamicResource SecondaryAccentBrush}"/>
+            </StackPanel>
+
+            <ListBox Grid.Row="1" 
+                     TextElement.Foreground="White"
+                     Background="Transparent" SelectedItem="{Binding SelectedPanel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListBoxItem x:Name="DashboardItem">
+                    <Border Background="Transparent" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <Material:PackIcon VerticalAlignment="Center" 
+                                           Kind="Home" Margin="10, 5"/>
+                            <TextBlock VerticalAlignment="Center" Margin="0, 5, 10, 5"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                                   Text="Tổng quan"/>
+                        </StackPanel>
+                    </Border>
+                </ListBoxItem>
+
+                <ListBoxItem x:Name="StaffItem">
+                    <Border Background="Transparent" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <Material:PackIcon VerticalAlignment="Center" 
+                                           Kind="Account" Margin="10, 5"/>
+                            <TextBlock VerticalAlignment="Center" Margin="0, 5, 10, 5"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                                   Text="Nhân sự"/>
+                        </StackPanel>
+                    </Border>
+                </ListBoxItem>
+
+                <ListBoxItem x:Name="ProjectItem">
+                    <Border Background="Transparent" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <Material:PackIcon VerticalAlignment="Center" 
+                                           Kind="LibraryBooks" Margin="10, 5"/>
+                            <TextBlock VerticalAlignment="Center" Margin="0, 5, 10, 5"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                                   Text="Dự án"/>
+                        </StackPanel>
+                    </Border>
+                </ListBoxItem>
+
+                <Border Background="Transparent" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <Material:PackIcon VerticalAlignment="Center" 
+                                           Kind="Calendar" Margin="10, 5"/>
+                        <TextBlock VerticalAlignment="Center" Margin="0, 5, 10, 5"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                                   Text="Lịch"/>
+                    </StackPanel>
+                </Border>
+                <Border Background="Transparent" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <Material:PackIcon VerticalAlignment="Center" 
+                                           Kind="Settings" Margin="10, 5"/>
+                        <TextBlock VerticalAlignment="Center" Margin="0, 5, 10, 5"
+                                   Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                                   Text="Cài đặt"/>
+                    </StackPanel>
+                </Border>
+            </ListBox>
+        </Grid>
+        <!--#endregion-->
+
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="60" SharedSizeGroup="TopBar"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--#region TOP BAR-->
+            <Grid Background="{DynamicResource MaterialDesignPaper}">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <DockPanel LastChildFill="False">
+                        <StackPanel Margin="10, 0" VerticalAlignment="Center" DockPanel.Dock="Left">
+                            <TextBlock Text="{Binding TxtMainTitle}" Style="{DynamicResource MaterialDesignTitleTextBlock}"/>
+                            <TextBlock Text="{Binding TxtSubTitle}" FontStyle="Italic" Style="{DynamicResource MaterialDesignBody1TextBlock}" Visibility="{Binding Text, Converter={StaticResource EmptyStringToVisibilityConverter}, RelativeSource={RelativeSource Self}}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region MAIN CONTENT-->
+            <Grid Grid.Row="1">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#ADA996" Offset="0"/>
+                        <GradientStop Color="#F2F2F2" Offset="0.3"/>
+                        <GradientStop Color="#DBDBDB" Offset="0.6"/>
+                        <GradientStop Color="#EAEAEA" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+            </Grid>
+            
+            <!--#endregion-->
+        </Grid>
+
+
+        <!--#region DIALOG HOST-->
+        <Material:DialogHost Grid.ColumnSpan="2"
+                             IsOpen="{Binding IsShowingDialog}"
+                             DialogContent="{Binding DialogContent}"/>
+        <!--#endregion-->
+
+        <!--#region MESSAGE SNACKBAR-->
+        <Material:Snackbar MessageQueue="{Binding MessageQueque}" 
+                           Grid.Row="2"
+                           Grid.Column="2"/>
+        <!--#endregion-->
+    </Grid>
+</Mah:MetroWindow>
